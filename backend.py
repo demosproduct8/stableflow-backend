@@ -415,8 +415,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Serve static files
-app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Enhanced validation models with Pydantic V2
 
@@ -673,10 +671,6 @@ async def rate_limit_check(request: Request):
     if not security_manager.check_rate_limit(client_ip):
         raise HTTPException(status_code=429, detail="Too many requests. Please try again later.")
     return True
-
-@app.get("/")
-async def serve_frontend():
-    return FileResponse('static/index.html')
 
 # Debug endpoints
 @app.get("/wallets/debug/all", summary="Debug all wallets")
